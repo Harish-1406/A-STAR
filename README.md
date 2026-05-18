@@ -1,12 +1,12 @@
 <h1>ExpNo 4 : Implement A* search algorithm for a Graph</h1> 
-<h3>Name:       </h3>
-<h3>Register Number:           </h3>
+<h3>Name:  HARISH P K     </h3>
+<h3>Register Number:  212224040104         </h3>
 <H3>Aim:</H3>
 <p>To ImplementA * Search algorithm for a Graph using Python 3.</p>
 <H3>Algorithm:</H3>
 
 ``````
-// A* Search Algorithm
+ A* Search Algorithm
 1.  Initialize the open list
 2.  Initialize the closed list
     put the starting node on the open 
@@ -49,6 +49,78 @@
     end (while loop)
 
 ``````
+**PROGRAM**
+
+```PY
+from collections import defaultdict
+def astarAlgo(start,goal):
+    open=set(start)
+    closed=set()
+    g={}
+    parents={}
+    g[start]=0
+    parents[start]=start
+    while len(open)>0:
+        n=None
+        for v in open:
+            if n==None or g[v]+heuristic(v)<g[n]+heuristic(n):
+                n=v
+        if n==goal or Graph_nodes[n]==None:
+            pass
+        else:
+            for (m,weight) in get_neighbors(n):
+                if m not in open and m not in closed:
+                    g[m]=g[n]+weight
+                    parents[m]=n
+                    open.add(m)
+                    closed.add(m)
+                else:
+                    if g[m]>g[n]+weight:
+                        g[m]=g[n]+weight
+                        parents[m]=n
+                        if m in closed:
+                            closed.remove(m)
+                            open.add(m)
+        if n==goal:
+            path=[]
+            while parents[n]!=n:
+                path.append(n)
+                n=parents[n]
+            path.append(start)
+            path.reverse()
+            print("Path Found:{}".format(path))
+            return path
+        open.remove(n)
+        closed.add(n)
+    return None
+            
+def get_neighbors(n):
+    if n in Graph_nodes:
+        return Graph_nodes[n]
+    else:
+        return None
+def heuristic(n):
+    return H_dist[n]
+graph=defaultdict(list)
+H_dist={}
+nodes,edges=map(int,input().split())
+for _ in range(edges):
+    u,v,w=map(str,input().split())
+    t=(u,float(w))
+    graph[v].append(t)
+    t1=(v,float(w))
+    graph[u].append(t1)
+print(graph)
+for _ in range(nodes):
+    nodelabels,hweight=map(str,input().split())
+    H_dist[nodelabels]=float(hweight)
+print(H_dist)
+Graph_nodes=graph
+start=input()
+goal=input()
+astarAlgo(start,goal)
+```
+
 
 <hr>
 <h2>Sample Graph I</h2>
@@ -89,6 +161,11 @@ J 0 <br>
 <hr>
 Path found: ['A', 'F', 'G', 'I', 'J']
 
+**OUTPUT**
+
+<img width="1450" height="704" alt="image" src="https://github.com/user-attachments/assets/94977071-277f-4ca0-8f62-79374fbaa88b" />
+
+
 
 <hr>
 <h2>Sample Graph II</h2>
@@ -117,3 +194,12 @@ G 0 <br>
 <h2>Sample Output</h2>
 <hr>
 Path found: ['A', 'E', 'D', 'G']
+
+**OUTPUT**
+
+<img width="1455" height="429" alt="image" src="https://github.com/user-attachments/assets/c258dca5-e226-49df-abfd-90d8abc91d64" />
+
+<h2>Result:</h2>
+The A* search algorithm was successfully implemented and the optimal path to reach the goal node in the graph was found using the heuristic function.
+
+
